@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>exglos</title>
+
+        <meta charset="utf-8" />
+
+        <meta name="description" content="exglos" />
+        <meta name="keywords" content="exglos" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#000000" />
+
+        <link rel="icon" href="icon.png" />
+        <link rel="stylesheet" href="index.css" />
+    </head>
+    <body>
+        <div id="main">
+            <div class="top">
+                <button id="connect">connect</button>
+                <p id="message">loading...</p>
+            </div>
+            <p id="balance"></p>
+            <div class="line">
+                <label>
+                    <span>eth</span>
+                    <input id="eth" type="text" />
+                </label>
+                <label>
+                    <span>exg</span>
+                    <input id="exg" type="text" />
+                </label>
+            </div>
+            <button id="buy">buy</button>
+            <p id="hint"></p>
+            <p id="dividends"></p>
+            <div class="line">
+                <button id="reinvest">reinvest</button>
+                <button id="withdraw">withdraw</button>
+            </div>
+        </div>
+        <input id="price" type="hidden" value="2000000000000000" />
+        <script src="ethers.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
