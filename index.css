@@ -3,7 +3,7 @@ html, body {
     padding: 0px;
 }
 div, input, button {
-    font-family: sans-serif;
+    font-family: monospace, sans-serif;
     overflow: hidden;
 }
 
@@ -83,11 +83,10 @@ h3 {
 }
 a {
     color: black;
-    text-decoration: none;
     outline: 0;
 }
 a:focus {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 @media (hover: hover) {
@@ -99,7 +98,7 @@ a:focus {
         border: 1px solid black;
     }
     a:hover {
-        text-decoration: underline;
+        text-decoration: none;
     }
 }
 

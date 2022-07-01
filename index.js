@@ -53,20 +53,14 @@
             }
             contract = new ethers.Contract(address, abi, provider.getSigner());
             contract.on('Profit', function (increaseWeiPerExg, event) {
-                console.log('Profit ' + increaseWeiPerExg);
-                console.log(event);
                 loadAccountData();
             });
             contract.on('Withdraw', function (holder, wei, event) {
-                console.log('Withdraw ' + holder + ', ' + wei);
-                console.log(event);
                 if (holder === account) {
                     loadAccountData();
                 }
             });
             contract.on('Transfer', function (from, to, exg, event) {
-                console.log('Transfer ' + from + ', ' + to + ', ' + exg);
-                console.log(event);
                 if (from === account || to === account) {
                     loadAccountData();
                 }
@@ -159,12 +153,10 @@
             }
             return contract.buy(ref, {value: eth});
         }).then(function (txResponse) {
-            console.log(txResponse);
             window.open(explorer[network] + '/tx/' + txResponse.hash);
             setLoading(false, true);
             txResponse.wait().then(function (response) {
                 alert('tx ' + response.transactionHash + ' is confirmed!');
-                console.log(response);
                 loadAccountData();
             }).catch(function (error) {
                 console.log(error);
@@ -201,12 +193,10 @@
             }
             return contract.reinvest();
         }).then(function (txResponse) {
-            console.log(txResponse);
             window.open(explorer[network] + '/tx/' + txResponse.hash);
             setLoading(false, true);
             txResponse.wait().then(function (response) {
                 alert('tx ' + response.transactionHash + ' is confirmed!');
-                console.log(response);
                 loadAccountData();
             }).catch(function (error) {
                 console.log(error);
@@ -243,12 +233,10 @@
             }
             return contract.withdraw();
         }).then(function (txResponse) {
-            console.log(txResponse);
             window.open(explorer[network] + '/tx/' + txResponse.hash);
             setLoading(false, true);
             txResponse.wait().then(function (response) {
                 alert('tx ' + response.transactionHash + ' is confirmed!');
-                console.log(response);
                 loadAccountData();
             }).catch(function (error) {
                 console.log(error);

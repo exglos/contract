@@ -1,0 +1,28 @@
+price = 1e15, refPromille = 15, refRequirement = 1e9 exg, a = b = c = 2e19 wei
+
+a.buy(a, 1e10 wei)
+a.wei = 1999999999e10, a.exg = 1e13, admin = 1e10 wei
+
+profit(1 eth)
+increase = 1e23, contract = 1e18 wei, a.divs = 1e18
+
+a.transact(b, 2e10 exg)
+a.exg = 998e10, b.exg = 2e10
+
+profit(1e9 wei)
+increase = 1e14, contract = 1000000001e9 wei, a.divs = 1000000000998e6, b.divs = 2e6
+
+c.buy(a, 1e15 wei)
+c.wei = 19999e15, c.exg = 1e18, a.wei = 2000001499e10, admin = 98501e10 wei
+
+a.reinvest
+admin = 1000985010998e6 wei, contract = 2e6 wei, a.exg = 1000000010978e9, a.divs = 0
+
+profit(4999999999999978 wei)
+increase = 4995004940124, contract = 5000000001999978 wei, a.divs = 4995004994959164, b.divs = 2099900, c.divs = 4995004940124
+
+b.buy(b, 23e15 wei)
+b.wei = 19977e15, b.exg = 2300000002e10, admin = 1023985010998e6 wei
+
+c.withdraw
+c.wei = 19999004995004940124, c.divs = 0, contract = 4995004997059854 wei
