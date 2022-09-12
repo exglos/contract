@@ -1,7 +1,7 @@
 'use strict';
 (function () {
-    var networkId = [1, 3]; // main, ropsten
-    var explorer = ['https://etherscan.io', 'https://ropsten.etherscan.io'];
+    var networkId = [1, 3, 5]; // main, ropsten, goerli
+    var explorer = ['https://etherscan.io', 'https://ropsten.etherscan.io', 'https://goerli.etherscan.io'];
     var address = '0x3dDee7CdF8D71490b518b1E6e6f2198433636903';
     var abi = [
         'function balanceOf(address) view returns (uint256)',
@@ -50,7 +50,7 @@
                 network--;
             }
             if (network < 0) {
-                return setLoading(false, 'switch to the main or ropsten network');
+                return setLoading(false, 'switch to the main or goerli network');
             }
             contract = new ethers.Contract(address, abi, provider.getSigner());
             contract.on('Profit', function (increaseWeiPerExg, event) {

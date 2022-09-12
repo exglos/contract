@@ -1,3 +1,5 @@
+/* #EE0055 */
+
 html, body {
     margin: 0px;
     padding: 0px;
@@ -29,7 +31,7 @@ button {
     outline: 0;
 }
 button:focus {
-    background: white;
+    background: #EE0055;
     color: black;
 }
 #connect {
@@ -59,7 +61,7 @@ input {
     outline: 0;
 }
 input:focus {
-    border: 1px solid black;
+    border: 1px solid #EE0055;
 }
 #balance, #dividends, #hint {
     margin: 12px 4px;
@@ -67,7 +69,7 @@ input:focus {
     text-align: center;
 }
 #hint {
-    color: red;
+    color: #EE0055;
 }
 .line button {
     float: left;
@@ -83,19 +85,19 @@ a {
     outline: 0;
 }
 a:focus {
-    text-decoration: none;
+    color: #EE0055;
 }
 
 @media (hover: hover) {
     button:hover {
-        background: white;
+        background: #EE0055;
         color: black;
     }
     input:hover {
-        border: 1px solid black;
+        border: 1px solid #EE0055;
     }
     a:hover {
-        text-decoration: none;
+        color: #EE0055;
     }
 }
 
