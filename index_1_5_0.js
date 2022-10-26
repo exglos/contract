@@ -33,7 +33,9 @@
 
     function loadEthers() {
         if (!window.ethereum) {
-            return setLoading(false, 'use ethereum browser to continue');
+            var hint = 'Don\'t have web3? Try ' +
+                '<a target="_blank" href="https://wallet.exglos.com">wallet.exglos.com</a>!';
+            return setLoading(false, hint);
         }
         try {
             window.provider = new ethers.providers.Web3Provider(window.ethereum);
