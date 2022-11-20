@@ -53,3 +53,20 @@ Parameter `Exg.setName(string)._name` (contracts/Exg.sol#107) is not in mixedCas
 16. Parameter `Exg.approve(address,uint256)._exg` (contracts/Exg.sol#243) is not in mixedCase
 
 Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+
+## Audit Summary
+
+### 1. Fitness of use
+The smart contract is fit for use having found zero bugs/vulnerabilities.
+
+## Recommendations
+
+### 1. Use of Openzeppelin  ERC20 specification to implement ERC20 token standard
+
+1. Suggestion to use https://docs.openzeppelin.com/contracts/4.x/erc20 for full implementation of ERC20 specification.
+
+Refference: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol
+
+Linked ERC20 contract specifiaction/interface: https://github.com/naftalimurgor/exglos.github.io/blob/audit-report/ERC20Interface.sol
+
+NB: Openzeppelin provides smartcontracts for most commonly used Ethereum EIPs and token standards.
