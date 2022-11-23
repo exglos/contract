@@ -1,9 +1,12 @@
 pragma solidity 0.8.11;
 
+import "./IERC20.sol";
+import "./SafeMath.sol";
 
 // @title erc20 token with refs and dividends
 // @dev sum(wei) = sum(exg)*profitPerExg/1e18 - sum(payoutsOf)
-contract Exg {
+contract Exg is IERC20 {
+    using SafeMath for uint256;
     address payable public admin;
     // @return current price in wei/exg
     uint256 public price;
@@ -14,12 +17,12 @@ contract Exg {
     mapping(address => int256) payoutsOf;
 
     // erc20
-    uint256 public totalSupply;
-    mapping(address => uint256) public balanceOf;
+    uint256 public _totalSupply;
+    mapping(address => uint256) public balances;
     mapping(address => mapping(address => uint256)) public allowance;
-    uint8 public constant decimals = 18;
-    string public constant symbol = "EXG";
-    string public name;
+    uint8 public constant _decimals = 18;
+    string public constant _symbol = "EXG";
+    string public _name;
 
     string public url;
 
@@ -37,11 +40,7 @@ contract Exg {
     event Withdraw(address indexed _holder, uint256 _wei);
     event Reinvest(address indexed _holder, uint256 _wei, uint256 _exg);
     // erc20
-    event Transfer(
-        address indexed _from,
-        address indexed _to,
-        uint256 _exg
-    );
+    event Transfer(address indexed _from, address indexed _to, uint256 _exg);
     event Approval(
         address indexed _owner,
         address indexed _spender,
@@ -62,7 +61,7 @@ contract Exg {
         emit RefPromille(refPromille);
         refRequirement = _refRequirement;
         emit RefRequirement(refRequirement);
-        name = _name;
+        _name = _name;
         url = _url;
     }
 
@@ -89,10 +88,44 @@ contract Exg {
         emit Price(price);
     }
 
-    function setRef(
-        uint256 _refPromille,
-        uint256 _refRequirement
-    ) external onlyAdmin {
+    /// creates a number of tokens and transfers to minting account
+    function _mint(address account, uint amount) internal {
+        require(account != address(0) );
+        _totalSupply = _totalSupply.add(amount);
+        balances[account] = balances[account].add(amount);
+        emit Transfer(address(0), account, amount);
+
+    }
+
+    /// Returns name of Token
+    function name() public view returns (string memory) {
+        return _name;
+    }
+
+    /// Returns symbol of Token
+    function symbol() public pure returns (string memory) {
+        return _symbol;
+    }
+
+    /// Returns decimals of the token
+    function decimals() public pure returns (uint8) {
+        return _decimals;
+    }
+
+    /// Returns total supply of tokens in existence
+    function totalSupply() public view returns (uint256) {
+        return _totalSupply;
+    }
+
+    /// returns balance of token holder
+    function balanceOf(address _owner) public view returns (uint256 balance) {
+        return balances[_owner];
+    }
+
+    function setRef(uint256 _refPromille, uint256 _refRequirement)
+        external
+        onlyAdmin
+    {
         if (refPromille != _refPromille) {
             require(_refPromille <= 500, "big refPromille");
             refPromille = _refPromille;
@@ -104,8 +137,8 @@ contract Exg {
         }
     }
 
-    function setName(string calldata _name) external onlyAdmin {
-        name = _name;
+    function setName(string calldata _tokeName) external onlyAdmin {
+        _name = _tokeName;
     }
 
     function setUrl(string calldata _url) external onlyAdmin {
@@ -116,7 +149,7 @@ contract Exg {
     function dividendsOf(address _holder) public view returns (uint256) {
         // wei = exg*profitPerExg/1e18 - payoutsOf
 
-        uint256 a = balanceOf[_holder] * profitPerExg / 1e18;
+        uint256 a = (balances[_holder] * profitPerExg) / 1e18;
         int256 b = payoutsOf[_holder];
         // a - b
         if (b < 0) {
@@ -135,9 +168,9 @@ contract Exg {
         // sum(wei) + in = sum(exg)*(profitPerExg + in*1e18/sum(exg))/1e18
         //  - sum(payoutsOf)
 
-        uint256 increase = msg.value * 1e18 / totalSupply;
+        uint256 increase = (msg.value * 1e18) / _totalSupply;
         require(increase > 0, "small eth");
-        profitPerExg += increase;
+        profitPerExg = increase;
         emit Profit(increase);
     }
 
@@ -146,22 +179,22 @@ contract Exg {
         //  - (sum(payoutsOf) + exg*profitPerExg/1e18)
 
         uint256 toAdmin = msg.value;
-        uint256 exg = toAdmin * 1e18 / price;
+        uint256 exg = (toAdmin * 1e18) / price;
         require(exg > 0, "small eth");
         uint256 toRef;
         if (_ref != address(0) && refPromille > 0) {
-            if (_ref != msg.sender && balanceOf[_ref] >= refRequirement) {
-                toRef = toAdmin * refPromille / 1000;
+            if (_ref != msg.sender && balances[_ref] >= refRequirement) {
+                toRef = (toAdmin * refPromille) / 1000;
                 toAdmin -= toRef;
             }
         }
 
-        uint256 payout = exg * profitPerExg / 1e18;
+        uint256 payout = (exg * profitPerExg) / 1e18;
         payoutsOf[msg.sender] = add(payoutsOf[msg.sender], payout);
         emit Buy(msg.sender, exg, toAdmin, _ref, toRef);
 
-        totalSupply += exg;
-        balanceOf[msg.sender] += exg;
+        _totalSupply += exg;
+        balances[msg.sender] += exg;
         emit Transfer(address(0), msg.sender, exg);
 
         admin.transfer(toAdmin);
@@ -192,14 +225,14 @@ contract Exg {
 
         uint256 divs = dividendsOf(msg.sender);
         require(divs > 0, "zero dividends");
-        uint256 exg = divs * 1e18 / price;
+        uint256 exg = (divs * 1e18) / price;
 
-        uint256 payout = divs + exg * profitPerExg / 1e18;
+        uint256 payout = divs + (exg * profitPerExg) / 1e18;
         payoutsOf[msg.sender] = add(payoutsOf[msg.sender], payout);
         emit Reinvest(msg.sender, divs, exg);
 
-        totalSupply += exg;
-        balanceOf[msg.sender] += exg;
+        _totalSupply += exg;
+        balances[msg.sender] += exg;
         emit Transfer(address(0), msg.sender, exg);
 
         if (divs > address(this).balance) {
@@ -208,19 +241,23 @@ contract Exg {
         admin.transfer(divs);
     }
 
-    function send(address _from, address _to, uint256 _exg) private {
+    function send(
+        address _from,
+        address _to,
+        uint256 _exg
+    ) private {
         // sum(wei) = sum(exg)*profitPerExg/1e18
         //  - (sum(payoutsOf) +- exg*profitPerExg/1e18)
 
         require(_to != address(0), "zero to");
-        require(balanceOf[_from] >= _exg, "big exg");
+        require(balances[_from] >= _exg, "big exg");
 
-        uint256 payout = _exg * profitPerExg / 1e18;
+        uint256 payout = (_exg * profitPerExg) / 1e18;
         payoutsOf[_from] = sub(payoutsOf[_from], payout);
         payoutsOf[_to] = add(payoutsOf[_to], payout);
 
-        balanceOf[_from] -= _exg;
-        balanceOf[_to] += _exg;
+        balances[_from] -= _exg;
+        balances[_to] += _exg;
         emit Transfer(_from, _to, _exg);
     }
 
