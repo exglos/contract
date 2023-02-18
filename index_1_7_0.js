@@ -19,6 +19,10 @@
     var loading = true, network = -1, contract, account;
 
     window.onload = function () {
+        setInterval(setTimer, 200);
+        setInterval(setProgress, 5 * 60 * 1000);
+        setProgress();
+
         document.getElementById('connect').onclick = function () {
             ethereum.enable().catch(console.log);
         };
@@ -30,6 +34,51 @@
 
         loadEthers();
     };
+
+    function setTimer() {
+        var seconds = (1688800000 - new Date().getTime() / 1000);
+        if (seconds < 0) {
+            seconds = 0;
+        }
+        var days = Math.trunc(seconds / 86400);
+        document.getElementById('presaleDays').innerHTML = days;
+        seconds -= days * 86400;
+        var hours = Math.trunc(seconds / 3600);
+        document.getElementById('presaleHours').innerHTML = hours;
+        seconds -= hours * 3600;
+        var minutes = Math.trunc(seconds / 60);
+        document.getElementById('presaleMinutes').innerHTML = minutes;
+        seconds = Math.trunc(seconds - minutes * 60);
+        document.getElementById('presaleSeconds').innerHTML = seconds;
+    }
+
+    function setProgress() {
+        var url = 'https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress=' +
+            address + '&apikey=6KYMVV3GRFU2MSXKJKXEMHUNFD52ME3EIV';
+        fetch(url).then(function (response) {
+            if (!response.ok) {
+                response.text().then(console.error);
+                throw new Error(response.status);
+            }
+            return response.json();
+        }).then(function (json) {
+            if (json.status !== '1') {
+                throw new Error(json.status + ': ' + json.message);
+            }
+            set(json.result);
+        }).catch(function (error) {
+            console.error(error);
+            set('297350000000000000000');
+        });
+
+        function set(totalSupply) {
+            var eth = (totalSupply / 1e18 * 0.002).toFixed(3);
+            document.getElementById('presaleProgressEth').innerHTML = eth + ' eth';
+            var exg = (totalSupply / 1e18).toFixed(1);
+            document.getElementById('presaleProgressExg').innerHTML = exg + ' exg';
+            document.getElementById('presaleProgressBar').style.width = (exg / 10000 * 100) + '%';
+        }
+    }
 
     function loadEthers() {
         if (!window.ethereum) {

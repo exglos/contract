@@ -10,6 +10,75 @@ h2, div, input, button {
     word-wrap: break-word;
 }
 
+#presale {
+    background: #EE0055;
+    margin-bottom: 64px;
+}
+#presaleLogo {
+    position: absolute;
+    margin: 8px;
+    width: 120px;
+    height: 120px;
+    background: url(logo.svg) center/contain no-repeat;
+    animation: in 10s forwards;
+}
+h1 {
+    margin: 44px 0px 48px 136px;
+    min-height: 98px;
+    font-size: 32px;
+    font-weight: normal;
+}
+#presaleTimer {
+    margin: auto;
+    max-width: 400px;
+}
+#presaleTimer div {
+    overflow: hidden;
+    float: left;
+    width: 25%;
+}
+.presaleTimerHint {
+    margin: 0px;
+    height: 20px;
+    text-align: center;
+    font-size: 12px;
+}
+.presaleTimerValue {
+    margin: 0px;
+    text-align: center;
+    font-size: 20px;
+}
+#presaleProgress {
+    margin: 64px auto;
+    width: 90%;
+    max-width: 800px;
+}
+.presaleProgressHint {
+    position: relative;
+    height: 26px;
+    font-size: 16px;
+}
+.presaleProgressHint p {
+    position: absolute;
+    margin: 4px 0px;
+    width: 100%;
+}
+.presaleProgressCenter {
+    text-align: center;
+}
+.presaleProgressRight {
+    text-align: right;
+}
+#presaleProgressContainer {
+    height: 32px;
+    background: white;
+}
+#presaleProgressBar {
+    height: 100%;
+    width: 0%;
+    background: black;
+    transition: width 1s;
+}
 h2 {
     margin: 32px 16px;
     text-align: center;
@@ -112,4 +181,22 @@ a:focus {
         float: left;
         width: 50%;
     }
+}
+@media (min-width: 600px) {
+    #presaleLogo {
+        margin: 32px;
+    }
+    h1 {
+        margin: 64px 0px 48px 160px;
+        font-size: 40px;
+    }
+    .presaleTimerValue {
+        font-size: 24px;
+    }
+}
+
+@keyframes in {
+    0% {opacity: 1}
+    5% {opacity: 0.06}
+    100% {opacity: 1}
 }
