@@ -1,79 +1,103 @@
 /* #EE0055 */
 
+@font-face {
+    font-family: main;
+    src: url(https://exglos.com/font.ttf);
+}
 html, body {
     margin: 0px;
     padding: 0px;
 }
-h2, div, input, button {
-    font-family: monospace, sans-serif;
+div, input, button {
+    font-family: main, monospace;
     overflow: hidden;
     word-wrap: break-word;
 }
-
-#presale {
-    background: #EE0055;
-    margin-bottom: 64px;
+a {
+    color: black;
+    outline: 0;
 }
-#presaleLogo {
+
+#top {
+    background: #EE0055;
+}
+#topLogo {
     position: absolute;
     margin: 8px;
     width: 120px;
     height: 120px;
-    background: url(logo.svg) center/contain no-repeat;
+    background: url(https://exglos.com/logo.svg) center/contain no-repeat;
     animation: in 10s forwards;
 }
-h1 {
-    margin: 44px 0px 48px 136px;
-    min-height: 98px;
+#top h1 {
+    margin: 44px 4px 48px 136px;
+    min-height: 80px;
     font-size: 32px;
     font-weight: normal;
 }
-#presaleTimer {
+#top a {
+    text-decoration: none;
+}
+#top a:focus {
+    text-decoration: underline;
+}
+#top h2 {
+    margin: 20px 4px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: normal;
+}
+#topTimer {
     margin: auto;
     max-width: 400px;
 }
-#presaleTimer div {
-    overflow: hidden;
+#topTimer div {
     float: left;
     width: 25%;
 }
-.presaleTimerHint {
+.topTimerValue {
+    margin: 0px;
+    text-align: center;
+    font-size: 20px;
+}
+.topTimerHint {
     margin: 0px;
     height: 20px;
     text-align: center;
     font-size: 12px;
 }
-.presaleTimerValue {
-    margin: 0px;
+#top h3 {
+    margin: 20px 4px;
     text-align: center;
-    font-size: 20px;
+    font-size: 24px;
+    font-weight: normal;
 }
-#presaleProgress {
-    margin: 64px auto;
+#topCapitalization {
+    margin: 4px auto 64px;
     width: 90%;
     max-width: 800px;
 }
-.presaleProgressHint {
+.topCapitalizationHint {
     position: relative;
     height: 26px;
     font-size: 16px;
 }
-.presaleProgressHint p {
+.topCapitalizationHint p {
     position: absolute;
     margin: 4px 0px;
     width: 100%;
 }
-.presaleProgressCenter {
+.topCapitalizationCenter {
     text-align: center;
 }
-.presaleProgressRight {
+.topCapitalizationRight {
     text-align: right;
 }
-#presaleProgressContainer {
+#topCapitalizationContainer {
     height: 32px;
     background: white;
 }
-#presaleProgressBar {
+#topCapitalizationBar {
     height: 100%;
     width: 0%;
     background: black;
@@ -84,7 +108,8 @@ h1 {
     width: 90%;
     max-width: 800px;
 }
-.top {
+#main .top {
+    margin-top: 64px;
     min-height: 80px;
 }
 button {
@@ -149,15 +174,22 @@ input:focus {
     min-height: 24px;
     text-align: center;
 }
-a {
+#main a {
     color: black;
     outline: 0;
 }
-a:focus {
+#main a:focus {
     color: #EE0055;
+}
+#main h2 {
+    margin-top: 64px;
+    font-size: 14px;
 }
 
 @media (hover: hover) {
+    #top a:hover {
+        text-decoration: underline;
+    }
     button:hover {
         background: #EE0055;
         color: black;
@@ -165,7 +197,7 @@ a:focus {
     input:hover {
         border: 1px solid #EE0055;
     }
-    a:hover {
+    #main a:hover {
         color: #EE0055;
     }
 }
@@ -177,14 +209,14 @@ a:focus {
     }
 }
 @media (min-width: 600px) {
-    #presaleLogo {
+    #topLogo {
         margin: 32px;
     }
-    h1 {
-        margin: 64px 0px 48px 160px;
+    #top h1 {
+        margin: 64px 4px 48px 180px;
         font-size: 40px;
     }
-    .presaleTimerValue {
+    .topTimerValue {
         font-size: 24px;
     }
 }

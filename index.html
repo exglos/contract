@@ -1,53 +1,55 @@
 <!DOCTYPE html>
-<!-- 1.8.0 -->
+<!-- 1.9.0 -->
 <html lang="en">
     <head>
         <title>exglos contract</title>
 
         <meta charset="utf-8" />
         <meta name="description" content="exglos smart contract" />
-        <meta name="keywords" content="exglos exg" />
+        <meta name="keywords" content="exglos jo satoshi contract" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#EE0055" />
 
-        <link rel="icon" href="logo.png" />
-        <link rel="stylesheet" href="index_1_8_0.css" />
+        <link rel="icon" href="https://exglos.com/logo.png" />
+        <link rel="stylesheet" href="index_1_9_0.css" />
     </head>
     <body>
-        <div id="presale">
-            <div id="presaleLogo"></div>
-            <h1>exglos: pre-sale</h1>
-            <div id="presaleTimer">
+        <div id="top">
+            <div id="topLogo"></div>
+            <h1><a href="https://exglos.com" target="_blank">exglos</a> contract</h1>
+            <h2>next price doubling in:</h2>
+            <div id="topTimer">
                 <div>
-                    <p class="presaleTimerHint">days:</p>
-                    <p id="presaleDays" class="presaleTimerValue">140</p>
+                    <p id="topTimerDays" class="topTimerValue">...</p>
+                    <p id="topTimerDaysHint" class="topTimerHint">days</p>
                 </div>
                 <div>
-                    <p class="presaleTimerHint">hours:</p>
-                    <p id="presaleHours" class="presaleTimerValue">0</p>
+                    <p id="topTimerHours" class="topTimerValue">...</p>
+                    <p id="topTimerHoursHint" class="topTimerHint">hours</p>
                 </div>
                 <div>
-                    <p class="presaleTimerHint">minutes:</p>
-                    <p id="presaleMinutes" class="presaleTimerValue">0</p>
+                    <p id="topTimerMinutes" class="topTimerValue">...</p>
+                    <p id="topTimerMinutesHint" class="topTimerHint">minutes</p>
                 </div>
                 <div>
-                    <p class="presaleTimerHint">seconds:</p>
-                    <p id="presaleSeconds" class="presaleTimerValue">0</p>
+                    <p id="topTimerSeconds" class="topTimerValue">...</p>
+                    <p id="topTimerSecondsHint" class="topTimerHint">seconds</p>
                 </div>
             </div>
-            <div id="presaleProgress">
-                <div class="presaleProgressHint">
+            <h3>or after capitalization reaches the target:</h3>
+            <div id="topCapitalization">
+                <div class="topCapitalizationHint">
                     <p>0</p>
-                    <p id="presaleProgressEth" class="presaleProgressCenter">eth</p>
-                    <p class="presaleProgressRight">20</p>
+                    <p id="topCapitalizationEth" class="topCapitalizationCenter">eth</p>
+                    <p class="topCapitalizationRight">20</p>
                 </div>
-                <div id="presaleProgressContainer">
-                    <div id="presaleProgressBar"></div>
+                <div id="topCapitalizationContainer">
+                    <div id="topCapitalizationBar"></div>
                 </div>
-                <div class="presaleProgressHint">
+                <div class="topCapitalizationHint">
                     <p>0</p>
-                    <p id="presaleProgressExg" class="presaleProgressCenter">exg</p>
-                    <p class="presaleProgressRight">10000</p>
+                    <p id="topCapitalizationExg" class="topCapitalizationCenter">exg</p>
+                    <p class="topCapitalizationRight">10000</p>
                 </div>
             </div>
         </div>
@@ -75,26 +77,43 @@
                 <button id="withdraw">withdraw</button>
             </div>
             <p id="ref"></p>
-            <p>
-                Contract address -
-                <a target="_blank"
-                   href="https://etherscan.io/address/0x3ddee7cdf8d71490b518b1e6e6f2198433636903">0x3ddee7cdf8d71490b518b1e6e6f2198433636903</a>.</p>
-            <p>This is erc20 ethereum token, and like a regular erc20 token,
-                it can be stored, transferred and used in third-party projects.</p>
-            <p>Exglos token is created only when purchased with eth and cannot be destroyed.</p>
-            <p>Current price is 0.002 eth/exg, it can be changed by the developer.
-                This money is used for development,
-                the income is distributed proportionally among all token holders as dividends.
-                Dividends can be withdrawn as eth or reinvested back into exg.</p>
+            <h2>Contract address -
+                <a href="https://etherscan.io/address/0x3ddee7cdf8d71490b518b1e6e6f2198433636903"
+                   target="_blank">0x3dDee7CdF8D71490b518b1E6e6f2198433636903</a>.</h2>
+            <p>This contract is the single canonical entry point to the project.
+                It holds the current url<span id="mainUrl"></span>.</p>
+            <p>Contract has an administrator.
+                The contract administrator concentrates the will of all holders into meaningful acts.
+                The current administrator is
+                <a href="https://etherscan.io/address/0x5B764b71D601bbD97434696C9F53EE2133F7E1cf"
+                   target="_blank">exglos.eth</a>, an
+                <a href="https://ethereum.org/en/developers/docs/accounts"
+                   target="_blank">externally-owned account</a>
+                that maintains the contract through a soft dao.
+                It may be replaced in the future with a multisig address or a dao contract.</p>
+            <p>Contract is a
+                <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20"
+                   target="_blank">erc20</a>
+                token with 18 decimals and the symbol 'EXG'.
+                The token represents shares of the company exglos.
+                This is a mintable token with zero initial supply.
+                It is created only when purchased with ether and cannot be destroyed.
+                The minting price is set by the contract administrator.
+                Start price is 0.002 eth/exg, current price is 0.002 eth/exg, target price is 1 eth/exg.
+                It is planned to double the price after buybacks annually.
+                All money goes to the contract administrator and is used for development.
+                The income is distributed proportionally among all token holders as dividends.
+                Dividends are accumulated on the contract address
+                and they are not transferred when transferring tokens.
+                Dividends can be withdrawn as ether or reinvested back into tokens.
+                Holders are the true owners of the funds,
+                only address owner can manage their tokens and dividends.
+                The balance of the contract is the sum of all undistributed dividends.</p>
             <p>For owners of more than 0.000000001 exg there is a referral program -
-                1.5% of the purchase, immediately, in eth.
-                Referral requirement and percentage can be changed by the developer.</p>
-            <p>The contract contains the current url of the project.
-                The contract is immutable and cannot be turned off.
-                The developer cannot change/block funds,
-                only their owner can manage tokens and dividends.</p>
+                1.5% of the purchase, immediately, in ether.
+                Referral requirement and percentage can be changed by the contract administrator.</p>
         </div>
         <script src="ethers.js"></script>
-        <script src="index_1_8_0.js"></script>
+        <script src="index_1_9_0.js"></script>
     </body>
 </html>

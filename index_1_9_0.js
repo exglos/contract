@@ -1,5 +1,7 @@
 'use strict';
+
 (function () {
+    var timer, capitalization;
     var networkId = [1, 3, 5]; // main, ropsten, goerli
     var explorer = ['https://etherscan.io', 'https://ropsten.etherscan.io', 'https://goerli.etherscan.io'];
     var address = '0x3dDee7CdF8D71490b518b1E6e6f2198433636903';
@@ -20,8 +22,8 @@
 
     window.onload = function () {
         setInterval(setTimer, 200);
-        setInterval(setProgress, 5 * 60 * 1000);
-        setProgress();
+        setCapitalization();
+        setUrl();
 
         document.getElementById('connect').onclick = function () {
             ethereum.enable().catch(console.log);
@@ -36,23 +38,38 @@
     };
 
     function setTimer() {
-        var seconds = (1688800000 - new Date().getTime() / 1000);
+        var seconds = Math.trunc((1688800000 - new Date().getTime() / 1000));
         if (seconds < 0) {
-            seconds = 0;
+            seconds = seconds % 86400 + 86400;
         }
+        if (timer === seconds) {
+            return;
+        }
+        timer = seconds;
         var days = Math.trunc(seconds / 86400);
-        document.getElementById('presaleDays').innerHTML = days;
+        document.getElementById('topTimerDays').innerHTML = days;
+        document.getElementById('topTimerDaysHint').innerHTML = days === 1 ? 'day' : 'days';
         seconds -= days * 86400;
         var hours = Math.trunc(seconds / 3600);
-        document.getElementById('presaleHours').innerHTML = hours;
+        document.getElementById('topTimerHours').innerHTML = hours;
+        document.getElementById('topTimerHoursHint').innerHTML = hours === 1 ? 'hour' : 'hours';
         seconds -= hours * 3600;
         var minutes = Math.trunc(seconds / 60);
-        document.getElementById('presaleMinutes').innerHTML = minutes;
+        document.getElementById('topTimerMinutes').innerHTML = minutes;
+        document.getElementById('topTimerMinutesHint').innerHTML = minutes === 1 ? 'minute' : 'minutes';
         seconds = Math.trunc(seconds - minutes * 60);
-        document.getElementById('presaleSeconds').innerHTML = seconds;
+        document.getElementById('topTimerSeconds').innerHTML = seconds;
+        document.getElementById('topTimerSecondsHint').innerHTML = seconds === 1 ? 'second' : 'seconds';
     }
 
-    function setProgress() {
+    function setCapitalization() {
+        if (!capitalization) {
+            setWidth(1000e18);
+            capitalization = true;
+            setTimeout(setCapitalization, 500);
+            return;
+        }
+
         var url = 'https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress=' +
             address + '&apikey=6KYMVV3GRFU2MSXKJKXEMHUNFD52ME3EIV';
         fetch(url).then(function (response) {
@@ -65,19 +82,49 @@
             if (json.status !== '1') {
                 throw new Error(json.status + ': ' + json.message);
             }
-            set(json.result);
+            setWidth(json.result);
+            setTimeout(setCapitalization, 600000);
         }).catch(function (error) {
             console.error(error);
-            set('297350000000000000000');
+            setTimeout(setCapitalization, 100000);
         });
 
-        function set(totalSupply) {
+        function setWidth(totalSupply) {
             var eth = (totalSupply / 1e18 * 0.002).toFixed(3);
-            document.getElementById('presaleProgressEth').innerHTML = eth + ' eth';
+            document.getElementById('topCapitalizationEth').innerHTML = eth + ' eth';
             var exg = (totalSupply / 1e18).toFixed(1);
-            document.getElementById('presaleProgressExg').innerHTML = exg + ' exg';
-            document.getElementById('presaleProgressBar').style.width = (exg / 10000 * 100) + '%';
+            document.getElementById('topCapitalizationExg').innerHTML = exg + ' exg';
+            document.getElementById('topCapitalizationBar').style.width = (exg / 10000 * 100) + '%';
         }
+    }
+
+    function setUrl() {
+        var url = 'https://api.etherscan.io/api?module=proxy&action=eth_getStorageAt&address=' +
+            address + '&position=0x0A&tag=latest&apikey=6KYMVV3GRFU2MSXKJKXEMHUNFD52ME3EIV';
+        fetch(url).then(function (response) {
+            if (!response.ok) {
+                response.text().then(console.error);
+                throw new Error(response.status);
+            }
+            return response.json();
+        }).then(function (json) {
+            json = json.result;
+            var i = 2;
+            var url = '';
+            while (i < json.length) {
+                var c = json.substring(i, i + 2);
+                if (c === '00') {
+                    break;
+                }
+                url += String.fromCharCode('0x' + c);
+                i += 2;
+            }
+            url = ' : <a href="https://' + url + '" target="_blank">' + url + '</a>';
+            document.getElementById('mainUrl').innerHTML = url;
+        }).catch(function (error) {
+            console.error(error);
+            setTimeout(setUrl, 100000);
+        });
     }
 
     function loadEthers() {
