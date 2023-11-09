@@ -1,0 +1,132 @@
+/* #EE0055 */
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+h1, div, button {
+    font-family: monospace;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+a {
+    color: black;
+    outline: 0;
+}
+a:focus {
+    color: #EE0055;
+}
+button {
+    border: none;
+    padding: 0px;
+    background: none;
+    text-decoration: underline;
+    text-align: left;
+    cursor: pointer;
+    outline: 0;
+}
+button:focus {
+    color: #EE0055;
+}
+
+h1 {
+    margin: 64px 8px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: normal;
+}
+#main {
+    margin: 32px auto;
+    width: 90%;
+    max-width: 900px;
+}
+#main p {
+    position: absolute;
+    right: 2px;
+    bottom: 0px;
+    font-size: 10px;
+}
+#main p .small {
+    font-size: 6px;
+}
+.big {
+    position: relative;
+    background: #EE0055;
+}
+.big h2 {
+    margin: 32px 100px 32px 2px;
+    font-size: 20px;
+    font-weight: normal;
+}
+.big p {
+    margin-bottom: 34px;
+    font-weight: bold;
+}
+.category {
+    position: relative;
+    background: #B0B0B0;
+}
+.category h3 {
+    margin: 16px 100px 16px 4px;
+    font-size: 18px;
+}
+.category button {
+    font-size: 18px;
+}
+.category p {
+    margin-bottom: 18px;
+    font-weight: bold;
+}
+.list {
+    display: none;
+}
+.list div:nth-child(even) {
+    background: #F0F0F0;
+}
+.list div {
+    position: relative;
+}
+.list h4 {
+    margin: 8px 100px 8px 6px;
+    font-size: 16px;
+    font-weight: normal;
+}
+.list p {
+    margin-bottom: 10px;
+}
+
+
+@media (hover: hover) {
+    a:hover, button:hover {
+        color: #EE0055;
+    }
+}
+
+@media (min-width: 500px) {
+    #main p {
+        font-size: 16px;
+    }
+    #main p .small {
+        font-size: 9px;
+    }
+    .big h2 {
+        margin-right: 140px;
+        font-size: 32px;
+    }
+    .big p {
+        margin-bottom: 36px;
+    }
+    .category h3 {
+        margin-right: 140px;
+        font-size: 24px;
+    }
+    .category button {
+        font-size: 24px;
+    }
+    .list h4 {
+        margin-right: 140px;
+    }
+    .list p {
+        margin-bottom: 7px;
+    }
+}
