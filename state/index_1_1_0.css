@@ -4,7 +4,7 @@ html, body {
     margin: 0px;
     padding: 0px;
 }
-h1, div, button {
+h1, div, button, p {
     font-family: monospace;
     overflow: hidden;
     word-wrap: break-word;
@@ -68,7 +68,6 @@ h1 {
 }
 .category h3 {
     margin: 16px 100px 16px 4px;
-    font-size: 18px;
 }
 .category button {
     font-size: 18px;
@@ -88,13 +87,16 @@ h1 {
 }
 .list h4 {
     margin: 8px 100px 8px 6px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: normal;
 }
 .list p {
     margin-bottom: 10px;
 }
-
+#time {
+    margin: 32px 8px;
+    text-align: center;
+}
 
 @media (hover: hover) {
     a:hover, button:hover {
@@ -114,19 +116,19 @@ h1 {
         font-size: 32px;
     }
     .big p {
-        margin-bottom: 36px;
+        margin-bottom: 38px;
     }
     .category h3 {
         margin-right: 140px;
-        font-size: 24px;
     }
     .category button {
         font-size: 24px;
     }
     .list h4 {
         margin-right: 140px;
+        font-size: 18px;
     }
-    .list p {
-        margin-bottom: 7px;
+    #time {
+        font-size: 20px;
     }
 }
