@@ -5,8 +5,9 @@ html, body {
     padding: 0px;
 }
 h1, div, button, p {
-    font-family: monospace;
     overflow: hidden;
+    text-size-adjust: none;
+    font-family: monospace;
     word-wrap: break-word;
 }
 a {
@@ -59,7 +60,7 @@ h1 {
     font-weight: normal;
 }
 .big p {
-    margin-bottom: 34px;
+    margin-bottom: 36px;
     font-weight: bold;
 }
 .category {
@@ -73,7 +74,7 @@ h1 {
     font-size: 18px;
 }
 .category p {
-    margin-bottom: 18px;
+    margin-bottom: 19px;
     font-weight: bold;
 }
 .list {
@@ -116,7 +117,7 @@ h1 {
         font-size: 32px;
     }
     .big p {
-        margin-bottom: 38px;
+        margin-bottom: 39px;
     }
     .category h3 {
         margin-right: 140px;
@@ -127,6 +128,9 @@ h1 {
     .list h4 {
         margin-right: 140px;
         font-size: 18px;
+    }
+    .list p {
+        margin-bottom: 8px;
     }
     #time {
         font-size: 20px;

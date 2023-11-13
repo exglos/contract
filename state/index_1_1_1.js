@@ -156,12 +156,12 @@
             var div = document.createElement('div');
             var p = document.createElement('p');
             p.innerHTML = formatWei(deposits[i].value);
-            div.append(p);
+            div.appendChild(p);
             var h4 = document.createElement('h4');
             h4.innerHTML = (deposits[i].description ? deposits[i].description + ', ' : '') +
                 formatHash(deposits[i].hash);
-            div.append(h4);
-            container.append(div);
+            div.appendChild(h4);
+            container.appendChild(div);
         }
         document.getElementById('deposits').innerHTML = formatWei(sum);
         var inputs = sum;
@@ -174,11 +174,11 @@
             var div = document.createElement('div');
             var p = document.createElement('p');
             p.innerHTML = formatWei(sales[i].value);
-            div.append(p);
+            div.appendChild(p);
             var h4 = document.createElement('h4');
             h4.innerHTML = sales[i].count + ' purchases, price ' + sales[i].price;
-            div.append(h4);
-            container.append(div);
+            div.appendChild(h4);
+            container.appendChild(div);
         }
         document.getElementById('sales').innerHTML = formatWei(sum);
         inputs = inputs.plus(sum);
@@ -191,12 +191,12 @@
             var div = document.createElement('div');
             var p = document.createElement('p');
             p.innerHTML = formatWei(other[i].value);
-            div.append(p);
+            div.appendChild(p);
             var h4 = document.createElement('h4');
             h4.innerHTML = (other[i].description ? other[i].description + ', ' : '') +
                 formatHash(other[i].hash);
-            div.append(h4);
-            container.append(div);
+            div.appendChild(h4);
+            container.appendChild(div);
         }
         document.getElementById('other').innerHTML = formatWei(sum);
         inputs = inputs.plus(sum);
@@ -210,12 +210,12 @@
             var div = document.createElement('div');
             var p = document.createElement('p');
             p.innerHTML = formatWei(dividends[i].value, true);
-            div.append(p);
+            div.appendChild(p);
             var h4 = document.createElement('h4');
             h4.innerHTML = (dividends[i].description ? dividends[i].description + ', ' : '') +
                 formatHash(dividends[i].hash);
-            div.append(h4);
-            container.append(div);
+            div.appendChild(h4);
+            container.appendChild(div);
         }
         document.getElementById('dividends').innerHTML = formatWei(sum, true);
         var outputs = sum;
@@ -228,12 +228,12 @@
             var div = document.createElement('div');
             var p = document.createElement('p');
             p.innerHTML = formatWei(expenses[i].value, true);
-            div.append(p);
+            div.appendChild(p);
             var h4 = document.createElement('h4');
             h4.innerHTML = (expenses[i].description ? expenses[i].description + ', ' : '') +
                 formatHash(expenses[i].hash);
-            div.append(h4);
-            container.append(div);
+            div.appendChild(h4);
+            container.appendChild(div);
         }
         document.getElementById('expenses').innerHTML = formatWei(sum, true);
         outputs = outputs.plus(sum);
