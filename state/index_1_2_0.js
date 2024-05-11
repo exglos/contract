@@ -9,6 +9,7 @@
     var deposits, other, dividends, expenses; // hash, value, description
     var sales; // count, price, value
     var block; // n, timestamp
+    var preloadedBlock;
 
     window.onload = function () {
         initButton('deposits');
@@ -35,7 +36,7 @@
 
     function readTxs() {
         var url = 'https://api.etherscan.io/api?module=account&action=txlist' +
-            '&address=0x5B764b71D601bbD97434696C9F53EE2133F7E1cf&startblock=18536000' +
+            '&address=0x5B764b71D601bbD97434696C9F53EE2133F7E1cf&startblock=' + preloadedBlock +
             '&apikey=6KYMVV3GRFU2MSXKJKXEMHUNFD52ME3EIV';
         fetch(url).then(function (response) {
             if (!response.ok) {
@@ -81,7 +82,7 @@
 
     function readInternalTxs() {
         var url = 'https://api.etherscan.io/api?module=account&action=txlistinternal' +
-            '&address=0x5B764b71D601bbD97434696C9F53EE2133F7E1cf&startblock=18536000' +
+            '&address=0x5B764b71D601bbD97434696C9F53EE2133F7E1cf&startblock=' + preloadedBlock +
             '&apikey=6KYMVV3GRFU2MSXKJKXEMHUNFD52ME3EIV';
         fetch(url).then(function (response) {
             if (!response.ok) {
@@ -134,7 +135,7 @@
             return response.json();
         }).then(function (json) {
             if (json.status !== '1' || isNaN(json.result)) {
-                console.log(json.message);
+                throw new Error(json.message);
             } else {
                 block.n = json.result;
             }
@@ -144,6 +145,8 @@
             }
         }).catch(function (error) {
             console.error(error);
+            fillData();
+            print();
         });
     }
 
@@ -242,8 +245,8 @@
         document.getElementById('balance').innerHTML = formatWei(inputs.minus(outputs));
 
         var date = new Date(block.timestamp * 1000 - new Date().getTimezoneOffset() * 60000);
-        document.getElementById('time').innerHTML = 'block ' + block.n +
-            ' (' + date.toISOString().substr(0, 19) + ')';
+        document.getElementById('time').innerHTML = date.toISOString().substr(0, 19) +
+            ', block ' + block.n;
     }
 
     function formatWei(value, negate) {
@@ -273,9 +276,9 @@
             price: 0.002,
             value: new BigNumber('2.146292891017674449').shiftedBy(18)
         }, {
-            count: 3,
+            count: 4,
             price: 0.004,
-            value: new BigNumber('0.257100174004222008').shiftedBy(18)
+            value: new BigNumber('0.268920174004222008').shiftedBy(18)
         }];
         other = [];
         dividends = [{
@@ -306,6 +309,10 @@
             hash: '0x2f67cfd714f2523c842fb66689984cb56e27f121e0f03a387d6286ebced16906',
             value: new BigNumber('0.300535284').shiftedBy(18),
             description: '0.000283 eth/exg'
+        }, {
+            hash: '0xe868cb4611690bdd767906219958a1e860d22e26503d3fc06e97dd54ad7f5de2',
+            value: new BigNumber('0.70012258662519735').shiftedBy(18),
+            description: '0.000611 eth/exg'
         }];
         expenses = [{
             hash: '0x1ba58b69b3b567205be79e579e934463e1104a9f754284c129e18f3d6a33692c',
@@ -375,10 +382,15 @@
             hash: '0x26603cf756a19638dcc0bf4616eabf5151e68f5ae515bacb7ce1c11c36121f5a',
             value: new BigNumber('0.070315').shiftedBy(18),
             description: '50% of development <a href="https://ens.exglos.com" target="_blank">ens.exglos.com</a>'
+        }, {
+            hash: '0xe63f7c4e210accb1df197503e2644f334684dbe87b571ad77b984b0034f054bf',
+            value: new BigNumber('0.070084').shiftedBy(18),
+            description: 'Jo salary 2023'
         }];
         block = {
-            n: 18536000,
-            timestamp: 1699552343
+            n: 19845857,
+            timestamp: 1715420408
         };
+        preloadedBlock = 19845857;
     }
 })();
