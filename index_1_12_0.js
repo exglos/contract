@@ -16,7 +16,7 @@
         'event Transfer(address indexed, address indexed, uint256)'
     ];
     var decimals = '1000000000000000000';
-    var price = ethers.utils.parseUnits('4000000000000000', 0);
+    var price = ethers.utils.parseUnits('8000000000000000', 0);
     var refRequirement = ethers.utils.parseUnits('1000000000', 0);
     var loading = true, network = -1, contract, account;
 
@@ -38,7 +38,7 @@
     };
 
     function setTimer() {
-        var seconds = Math.trunc((1719710400 - new Date().getTime() / 1000));
+        var seconds = Math.trunc((1751246400 - new Date().getTime() / 1000));
         if (seconds < 0) {
             seconds = seconds % 86400 + 86400;
         }
@@ -90,11 +90,11 @@
         });
 
         function setWidth(totalSupply) {
-            var eth = (totalSupply / 1e18 * 0.004).toFixed(3);
+            var eth = (totalSupply / 1e18 * 0.008).toFixed(3);
             document.getElementById('topCapitalizationEth').innerHTML = eth + ' eth';
             var exg = (totalSupply / 1e18).toFixed(1);
             document.getElementById('topCapitalizationExg').innerHTML = exg + ' exg';
-            document.getElementById('topCapitalizationBar').style.width = (exg / 10000 * 100) + '%';
+            document.getElementById('topCapitalizationBar').style.width = (exg / 8000 * 100) + '%';
         }
     }
 
