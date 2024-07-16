@@ -276,9 +276,13 @@
             price: 0.002,
             value: new BigNumber('2.146292891017674449').shiftedBy(18)
         }, {
-            count: 4,
+            count: 5,
             price: 0.004,
-            value: new BigNumber('0.268920174004222008').shiftedBy(18)
+            value: new BigNumber('0.362988344309102215').shiftedBy(18)
+        }, {
+            count: 0,
+            price: 0.008,
+            value: new BigNumber('0').shiftedBy(18)
         }];
         other = [];
         dividends = [{
@@ -386,11 +390,19 @@
             hash: '0xe63f7c4e210accb1df197503e2644f334684dbe87b571ad77b984b0034f054bf',
             value: new BigNumber('0.070084').shiftedBy(18),
             description: 'Jo salary 2023'
+        }, {
+            hash: '0xaa8a25bc6a79bdaf1640b7c964555ab6ca9a59fbafbac7442c78269766c0d1f7',
+            value: new BigNumber('0.003929506550138845').shiftedBy(18),
+            description: 'exglos vpn server for one year'
+        }, {
+            hash: '0xc3c34e6704aa6bf65cfcf26004c3316279a9c2f12c4222f7307a5fef84d2d8b3',
+            value: new BigNumber('0.000185010386641724').shiftedBy(18),
+            description: 'set price 0.008'
         }];
         block = {
-            n: 19845857,
-            timestamp: 1715420408
+            n: 20318897,
+            timestamp: 1721130803
         };
-        preloadedBlock = 19845857;
+        preloadedBlock = 20318897;
     }
 })();
