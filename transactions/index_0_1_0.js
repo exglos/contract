@@ -9,26 +9,36 @@ var holders = new Map(); // address, {name, payouts, payoutsStorageAddress, bala
 var wei = ethers.utils.parseEther('1');
 
 
-function print(message) {
-    var p = document.createElement('pre');
-    p.innerHTML = message;
-    document.getElementById('main').append(p);
+function print(prefix, symbol, value, address) {
+    var msg = prefix;
+    if (value) {
+        msg += ': ' + ethers.utils.formatEther(value);
+        if (symbol) {
+            msg += ' ' + symbol;
+        }
+        msg += ' (' + ethers.utils.hexValue(value);
+        if (address) {
+            msg += ' at ' + address;
+        }
+        msg += ')';
+    }
+    var pre = document.createElement('pre');
+    pre.innerHTML = msg;
+    document.getElementById('main').append(pre);
 }
 
 function dump() {
-    print('balance: ' + ethers.utils.formatEther(balance) + ' eth');
-    print('price: ' + ethers.utils.formatEther(price) + ' eth/exg');
-    print('profitPerExg: ' + ethers.utils.formatUnits(profitPerExg));
-    print('totalSupply: ' + ethers.utils.formatEther(totalSupply) + ' exg');
+    print('balance', 'eth', balance);
+    print('price', 'eth/exg', price, priceStorageAddress);
+    print('profitPerExg', null, profitPerExg, profitPerExgStorageAddress);
+    print('totalSupply', 'exg', totalSupply, totalSupplyStorageAddress);
     print('holders: ' + holders.size);
     holders.forEach(function (value, key, map) {
         print(' ' + key + ' (' + value.name + ')');
-        print('  payouts: ' + ethers.utils.formatUnits(value.payouts) + ' (' +
-              value.payoutsStorageAddress + ')');
-        print('  balance: ' + ethers.utils.formatUnits(value.balance) + ' exg (' +
-              value.balanceStorageAddress + ')');
+        print('  payouts', null, value.payouts, value.payoutsStorageAddress);
+        print('  balance', 'exg', value.balance, value.balanceStorageAddress);
         var divs = value.balance.mul(profitPerExg).div(wei).sub(value.payouts);
-        print('  dividends: ' + ethers.utils.formatEther(divs) + ' eth');
+        print('  dividends', 'eth', divs);
     });
 }
 
@@ -260,6 +270,83 @@ price = ethers.utils.parseUnits('4000000000000000', 0);
 
 // 0x0f9250cf14d2c735f6feacfa262b4dc70e552c342fc8f34650cdd6d38bf9fc96
 reinvest('0xE974e991668CDEAF98e03A2154363a8f20494909');
+
+// 0xb9f470d6cfff09ac73e08ed2fc5a44d4a71cbf8d8ebfd513131723a1de69ae85
+buy('0.004', '0xE974e991668CDEAF98e03A2154363a8f20494909');
+
+// 0xf04a8b1215bedb8493e8dc7a66e7e8b2ae981730e3a48eca46e106d8c4d6155b
+withdraw('0xC5E4045E291EE6a414beb298310fF41b86D53666');
+
+// 0xe88b7b760d813c2894a955b35e921c29050c7bc20142f50dbc8579e30513a055
+buy('0.01', '0x7961c6AD766F0306C67b3b2660fE74070ba1aBEA');
+
+// 0x6ef9fdd710c625e4fbf823c668d5acacea56b13b0c1866e85dafbdf1ebb676f5
+buy('0.012', '0x7961c6AD766F0306C67b3b2660fE74070ba1aBEA');
+
+// 0xe868cb4611690bdd767906219958a1e860d22e26503d3fc06e97dd54ad7f5de2
+profit('0.7');
+
+// 0xb9b1388ddd07d012d03d897c7442ac49e7c2c16f9c268ccdc3870eb1dc451942
+reinvest('0x7961c6AD766F0306C67b3b2660fE74070ba1aBEA');
+
+// 0x74c6714cd0748b67c00f35cc664a3508e2699d8024f290508bbe0c8348b48d2e
+withdraw('0xC5E4045E291EE6a414beb298310fF41b86D53666');
+
+// 0xa1cb2b28d98a3b21b5368fd6152961139bf441899f3a6359c2f057dae9495b39
+transfer('28.680376660501092', '0xC5E4045E291EE6a414beb298310fF41b86D53666',
+         '0x7961c6AD766F0306C67b3b2660fE74070ba1aBEA');
+
+// 0xc3c34e6704aa6bf65cfcf26004c3316279a9c2f12c4222f7307a5fef84d2d8b3
+price = ethers.utils.parseUnits('8000000000000000', 0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 dump();
 check();
