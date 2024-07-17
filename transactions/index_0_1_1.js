@@ -32,14 +32,20 @@ function dump() {
     print('price', 'eth/exg', price, priceStorageAddress);
     print('profitPerExg', null, profitPerExg, profitPerExgStorageAddress);
     print('totalSupply', 'exg', totalSupply, totalSupplyStorageAddress);
-    print('holders: ' + holders.size);
+    print('holders: ');
+    var n = holders.size;
     holders.forEach(function (value, key, map) {
+        if (value.payouts.isZero() && value.balance.isZero()) {
+            n--;
+            return;
+        }
         print(' ' + key + ' (' + value.name + ')');
         print('  payouts', null, value.payouts, value.payoutsStorageAddress);
         print('  balance', 'exg', value.balance, value.balanceStorageAddress);
         var divs = value.balance.mul(profitPerExg).div(wei).sub(value.payouts);
         print('  dividends', 'eth', divs);
     });
+    print('non-zero holders: ' + n);
 }
 
 function check() {
@@ -298,55 +304,6 @@ transfer('28.680376660501092', '0xC5E4045E291EE6a414beb298310fF41b86D53666',
 
 // 0xc3c34e6704aa6bf65cfcf26004c3316279a9c2f12c4222f7307a5fef84d2d8b3
 price = ethers.utils.parseUnits('8000000000000000', 0);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 dump();
 check();

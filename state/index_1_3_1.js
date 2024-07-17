@@ -19,6 +19,7 @@
         initButton('expenses');
 
         fillData();
+        print();
         readTxs();
         readInternalTxs();
         readBlock();
